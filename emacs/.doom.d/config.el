@@ -2,10 +2,6 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-(setq evil-want-fine-undo t)
-(add-hook 'pdf-tools-enabled-hook #'pdf-view-midnight-minor-mode)
-(add-hook 'pdf-tools-enabled-hook #'pdf-view-auto-slice-minor-mode)
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Francesco Alemanno"
@@ -54,3 +50,28 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+
+;;
+
+(setq evil-want-fine-undo t)
+
+(add-hook 'pdf-tools-enabled-hook #'pdf-view-midnight-minor-mode)
+(add-hook 'pdf-tools-enabled-hook #'pdf-view-auto-slice-minor-mode)
+(add-hook 'pdf-tools-enabled-hook #'pdf-view-fit-width-to-window)
+
+
+;;; handy keybinding for deadgrep
+(global-set-key (kbd "<f5>") #'deadgrep)
+
+(map!
+ ;; Easier window navigation
+ :n "C-h"   #'evil-window-left
+ :n "C-j"   #'evil-window-down
+ :n "C-k"   #'evil-window-up
+ :n "C-l"   #'evil-window-right
+
+ (:after treemacs-evil
+   (:map evil-treemacs-state-map
+     "C-h" #'evil-window-left
+     "C-l" #'evil-window-right)))
