@@ -75,3 +75,11 @@
    (:map evil-treemacs-state-map
      "C-h" #'evil-window-left
      "C-l" #'evil-window-right)))
+;;(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+;; '(default ((t (:height 110 :family "Hack")))))
+(setq doom-font (font-spec :family "Hack" :size 14 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "Hack" :size 14))
