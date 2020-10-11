@@ -15,6 +15,14 @@ cd ~/.dotfiles
 stow emacs
 ```
 
+Install Fonts contained in fonts folder:
+
+``` sh
+mkdir -p ~/.local/share/fonts
+cp fonts/* ~/.local/share/fonts/
+fc-cache -f -v
+```
+
 Run Doom Sync
 
 ``` sh
