@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: eqnarray
+# key: eqn
+# --
+
+\begin{eqnarray}
+\label{eq:${1:label}}
+${2:A} &=& ${3:B} \\\\
+\end{eqnarray}

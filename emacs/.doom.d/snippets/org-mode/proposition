@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name:proposition
+# key: <p
+# --
+
+#+begin_proposition
+$1
+#+end_proposition

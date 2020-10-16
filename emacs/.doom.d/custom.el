@@ -4,6 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(font-latex-fontify-sectioning 1.2)
+ '(org-agenda-files nil)
  '(pdf-view-continuous t)
  '(pdf-view-display-size (quote fit-width))
  '(preview-default-document-pt 10)

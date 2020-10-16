@@ -81,7 +81,28 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
 ;; '(default ((t (:height 110 :family "Hack")))))
+
 (setq doom-font (font-spec :family "Hack" :size 14 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Hack" :size 14))
+
 ;; (setq org-highlight-latex-and-related '(latex script entities))
-(setq org-src-fontify-natively t)
+(defun myorg ()
+  (interactive)
+  (require 'ox-latex)
+  (setq org-src-fontify-natively t)
+  (add-to-list 'org-latex-classes
+        '("koma-article"
+             "\\documentclass{scrartcl}
+              \\usepackage{amsthm}
+              \\newtheorem{theorem}{Theorem}
+              \\newtheorem{definition}{Definition}
+              \\newtheorem{proposition}{Proposition}
+              \\newtheorem{remark}{Remark}"
+             ("\\section{%s}" . "\\section*{%s}")
+             ("\\subsection{%s}" . "\\subsection*{%s}")
+             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+             ("\\paragraph{%s}" . "\\paragraph*{%s}")
+             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+)
+
+(add-hook 'org-mode-hook 'myorg)
