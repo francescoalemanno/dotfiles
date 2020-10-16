@@ -83,3 +83,5 @@
 ;; '(default ((t (:height 110 :family "Hack")))))
 (setq doom-font (font-spec :family "Hack" :size 14 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Hack" :size 14))
+;; (setq org-highlight-latex-and-related '(latex script entities))
+(setq org-src-fontify-natively t)
