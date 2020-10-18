@@ -86,7 +86,7 @@
       doom-variable-pitch-font (font-spec :family "Hack" :size 14))
 
 ;; (setq org-highlight-latex-and-related '(latex script entities))
-(defun myorg ()
+(defun fa-org-conf ()
   (interactive)
   (require 'ox-latex)
   (setq org-src-fontify-natively t)
@@ -105,4 +105,9 @@
              ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 )
 
-(add-hook 'org-mode-hook 'myorg)
+(add-hook 'org-mode-hook 'fa-org-conf)
+(add-hook 'org-mode-hook '+org-pretty-mode)
+
+;(defun fa-org-get-setup ()
+;  (expand-file-name (concat (file-name-as-directory "org_tpl") "orgsetup.org") doom-private-dir)
+;  )

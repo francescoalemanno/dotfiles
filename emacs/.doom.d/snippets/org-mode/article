@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name:article
+# key: <article
+# --
+
+#+TITLE: $1
+#+AUTHOR: Francesco Alemanno
+#+LATEX_CLASS: koma-article
+#+LATEX_HEADER: \usepackage{float}
+#+BEGIN_EXPORT latex
+\newcommand{\bbE}{\mathbb{E}}
+#+END_EXPORT
+
+$2
