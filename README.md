@@ -5,7 +5,7 @@ Install Doom-Emacs
 ``` sh
 git clone https://github.com/hlissner/doom-emacs ~/.emacs.d -b develop
 cd ~/.emacs.d
-make quickstart
+~/.emacs.d/bin/doom install
 ```
 
 Install personal config
