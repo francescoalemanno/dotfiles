@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: beamer
+# key: <beamer
+# condition: t
+# --
+
+#+TITLE: $1
+#+AUTHOR: Francesco Alemanno
+#+OPTIONS: H:2 toc:t num:t
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation]
+#+BEAMER_THEME: CambridgeUS
+#+COLUMNS: %45ITEM %10BEAMER_ENV(Env) %10BEAMER_ACT(Act) %4BEAMER_COL(Col)
+
+$2

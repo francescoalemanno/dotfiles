@@ -103,6 +103,11 @@
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
              ("\\paragraph{%s}" . "\\paragraph*{%s}")
              ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  ;(add-to-list 'org-latex-classes
+  ;          '("moderncv"
+  ;            "\\documentclass{moderncv}"
+  ;            ("\\section{%s}" . "\\section*{%s}")
+  ;            ("\\subsection{%s}" . "\\subsection*{%s}")))
 )
 
 (add-hook 'org-mode-hook 'fa-org-conf)
@@ -111,3 +116,12 @@
 ;(defun fa-org-get-setup ()
 ;  (expand-file-name (concat (file-name-as-directory "org_tpl") "orgsetup.org") doom-private-dir)
 ;  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (after! evil-org                               ;;
+;;     (use-package ox-moderncv                   ;;
+;;         :load-path "~/.doom.d/packages/org-cv" ;;
+;;         ;;:init (require 'ox-altacv))          ;;
+;;         :init (require 'ox-moderncv))          ;;
+;;     )                                          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
