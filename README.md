@@ -8,8 +8,14 @@ cd ~/.emacs.d
 ~/.emacs.d/bin/doom install
 ```
 
+Install required packages
+``` sh
+apt-get install autoconf automake g++ gcc libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev libz-dev make pkg-config stow
+```
+
 Install personal config
 ``` sh
+rm -R ~/.doom.d
 git clone https://github.com/francescoalemanno/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 stow emacs
