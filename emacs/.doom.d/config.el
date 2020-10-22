@@ -62,7 +62,7 @@
 
 
 ;;; handy keybinding for deadgrep
-(global-set-key (kbd "<f5>") #'deadgrep)
+;;(global-set-key (kbd "<f5>") #'deadgrep)
 
 (map!
  ;; Easier window navigation
@@ -90,6 +90,7 @@
   (interactive)
   (require 'ox-latex)
   (setq org-src-fontify-natively t)
+  (setq org-export-with-email t)
   (add-to-list 'org-latex-classes
         '("koma-article"
              "\\documentclass{scrartcl}
@@ -126,3 +127,4 @@
 ;;     )                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (menu-bar-mode 1)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
