@@ -23,7 +23,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -128,3 +128,89 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (menu-bar-mode 1)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+
+
+(after! org
+  (map! :map org-mode-map
+        :localleader
+        :desc "View exported file" "v" #'org-view-output-file)
+
+  (defun org-view-output-file (&optional org-file-path)
+    "Visit buffer open on the first output file (if any) found, using `org-view-output-file-extensions'"
+    (interactive)
+    (let* ((org-file-path (or org-file-path (buffer-file-name) ""))
+           (dir (file-name-directory org-file-path))
+           (basename (file-name-base org-file-path))
+           (output-file nil))
+      (dolist (ext org-view-output-file-extensions)
+        (unless output-file
+          (when (file-exists-p
+                 (concat dir basename "." ext))
+            (setq output-file (concat dir basename "." ext)))))
+      (if output-file
+          (if (member (file-name-extension output-file) org-view-external-file-extensions)
+              (browse-url-xdg-open output-file)
+            (pop-to-buffer (or (find-buffer-visiting output-file)
+                               (find-file-noselect output-file))))
+        (message "No exported file found")))))
+
+(defvar org-view-output-file-extensions '("pdf" "md" "rst" "txt" "tex" "html")
+  "Search for output files with these extensions, in order, viewing the first that matches")
+(defvar org-view-external-file-extensions '("html")
+  "File formats that should be opened externally.")
+(setq-default major-mode 'org-mode)
+
+
+
+(setq doom-theme 'doom-vibrant)
+(delq! t custom-theme-load-path)
+
+
+(custom-set-faces!
+  '(doom-modeline-buffer-modified :foreground "orange"))
+
+
+(defun doom-modeline-conditional-buffer-encoding ()
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+
+(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+
+
+(setq-default
+ delete-by-moving-to-trash t                      ; Delete files to trash
+ window-combination-resize t                      ; take new window space from all other windows (not just current)
+ x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+
+(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
+      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
+      auto-save-default t                         ; Nobody likes to loose work, I certainly don't
+      truncate-string-ellipsis "…")               ; Unicode ellispis are nicer than "...", and also save /precious/ space
+
+(display-time-mode 1)                             ; Enable time in the mode-line
+(unless (equal "Battery status not available"
+               (battery))
+  (display-battery-mode 1))                       ; On laptops it's nice to know how much power you have
+(global-subword-mode 1)                           ; Iterate through CamelCase words
+
+
+
+(setq display-line-numbers-type 'relative)
+
+(setq calc-angle-mode 'rad  ;; radians are rad
+      calc-algebraic-mode t ;; allows '2*x instead of 'x<RET>2*
+      calc-symbolic-mode t) ;; keeps stuff like √2 irrational for as long as possible
+
+
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
+  (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+
+
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000)
+(after! evil (setq evil-ex-substitute-global t))
