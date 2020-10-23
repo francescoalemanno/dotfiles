@@ -10,7 +10,7 @@ cd ~/.emacs.d
 
 Install required packages
 ``` sh
-apt-get install autoconf automake g++ gcc libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev libz-dev make pkg-config stow
+apt-get install autoconf automake g++ gcc clang-format libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev libz-dev make pkg-config stow
 ```
 
 Install personal config
