@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: matrix
+# key: mat
+# condition: t
+# --
+
+#+attr_latex: :mode math :environment matrix :math-prefix ${1:M}=\left( :math-suffix \right) 
+| a | b |
+| c | d |

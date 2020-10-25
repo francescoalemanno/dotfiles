@@ -76,17 +76,10 @@
    (:map evil-treemacs-state-map
      "C-h" #'evil-window-left
      "C-l" #'evil-window-right)))
-;;(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-;; '(default ((t (:height 110 :family "Hack")))))
 
 (setq doom-font (font-spec :family "Hack" :size 14 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Hack" :size 14))
 
-;; (setq org-highlight-latex-and-related '(latex script entities))
 (defun fa-org-conf ()
   (interactive)
   (require 'ox-latex)
@@ -105,11 +98,93 @@
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
              ("\\paragraph{%s}" . "\\paragraph*{%s}")
              ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+          '("fa-cv"
+             "\\documentclass[a4paper]{article}
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
+\\usepackage{graphicx}
+\\usepackage{grffile}
+\\usepackage{longtable}
+\\usepackage{wrapfig}
+\\usepackage{rotating}
+\\usepackage[normalem]{ulem}
+\\usepackage{amsmath}
+\\usepackage{textcomp}
+\\usepackage{amssymb}
+\\usepackage{capt-of}
+\\usepackage{url}
+\\usepackage{calc}
+\\usepackage{parskip}            % ignore paragraph prefix space
+\\usepackage{titlesec}           % custom section
+\\usepackage{enumitem}           % custom lists
+\\usepackage[big]{layaureo} % Margin formatting of the A4 page, an
+                           % alternative to layaureo can be
+                           % \\usepackage{fullpage}
+                           % To reduce the height of the top margin
+                           % uncomment: \\addtolength{\\voffset}{-1.3cm}
+\\usepackage{color}
+\\usepackage{hyperref}
+\\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\\hypersetup{colorlinks,breaklinks, urlcolor=linkcolour,linkcolor=linkcolour}
+
+\\definecolor{sectionothercolor}{rgb}{1.00,0.65,0.20}
+\\definecolor{sectioncolor}{rgb}{0.35,0.45,0.55}
+
+\\pagestyle{empty} % Removes page numbering
+
+%% Set all text's left skip
+\\leftskip=0.17\\textwidth
+
+%% Config list
+\\usepackage{enumitem}
+
+\\usepackage{cite}
+
+\\makeatletter
+\\renewcommand*{\\maketitle}{%
+  {
+     \\raggedleft{\\Huge \\@title}\\\\[.5in]
+  }
+}
+\\renewcommand*{\\tableofcontents}{}
+\\makeatother
+
+%% Redefine Section Headings, etc.
+\\titleformat{\\section} %command
+            {\\Large\\scshape\\raggedright} %format
+            {} %prefix number label
+            {0em} %sep
+            {} %before
+            [\\titlerule] %after
+\\titlespacing{\\section}{0pt}{10pt}{5pt}
+
+\\titleformat{\\subsection} %command
+            [leftmargin] %shape
+            {\\normalsize\\raggedleft\\bf} %format
+            {} %prefix number label
+            {0pt} %sep
+            {} %before
+            [] %after
+\\titlespacing{\\subsection}
+            {0.3\\textwidth}% max width of the title(for wrap/leftmargin shape)
+            {5pt}% vertical space before the title
+            {15pt}% separation between title and text
+\\renewcommand
+             [NO-DEFAULT-PACKAGES]
+             [PACKAGES]
+             [EXTRA]"
+             ("\\section{%s}" . "\\section*{%s}")
+             ("\\subsection{%s}" . "\\subsection*{%s}")
+             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+             ("\\paragraph{%s}" . "\\paragraph*{%s}")
+             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   ;(add-to-list 'org-latex-classes
   ;          '("moderncv"
   ;            "\\documentclass{moderncv}"
   ;            ("\\section{%s}" . "\\section*{%s}")
   ;            ("\\subsection{%s}" . "\\subsection*{%s}")))
+(setq org-latex-pdf-process (quote ("latexmk -pdf %f")))
 )
 
 (add-hook 'org-mode-hook 'fa-org-conf)
@@ -206,7 +281,7 @@
 
 
 (after! company
-  (setq company-idle-delay 0.5
+  (setq company-idle-delay 0.2
         company-minimum-prefix-length 2)
   (setq company-show-numbers t)
   (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
@@ -215,3 +290,5 @@
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 (after! evil (setq evil-ex-substitute-global t))
+
+(set-company-backend! 'julia-mode '(company-yasnippet company-dabbrev-code :separate))
