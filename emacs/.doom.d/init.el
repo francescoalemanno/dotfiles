@@ -21,14 +21,10 @@
 
        :completion
        company           ; the ultimate code completion backend
-       ;;helm                       ; the *other* search engine for love and life
        ;;ido                        ; the other *other* search engine...
-       (ivy                         ; a search engine for love and life
-       +icons                      ; ... icons are nice
-       +prescient)                 ; ... I know what I want(ed)
+       (ivy +icons +fuzzy +prescient)      ; a search engine for love and life
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ;ivy               ; a search engine for love and life
 
        :ui
        ;;deft              ; notational velocity for Emacs

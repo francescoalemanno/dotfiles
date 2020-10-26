@@ -25,9 +25,15 @@
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
 
+(setq doom-theme 'doom-palenight)
+(delq! t custom-theme-load-path)
+
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+(setq diary-file "~/org/diary.org")
+
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -92,7 +98,17 @@
               \\newtheorem{theorem}{Theorem}
               \\newtheorem{definition}{Definition}
               \\newtheorem{proposition}{Proposition}
-              \\newtheorem{remark}{Remark}"
+              \\newtheorem{remark}{Remark}
+\\makeatletter
+\\DeclareOldFontCommand{\\rm}{\\normalfont\\rmfamily}{\\mathrm}
+\\DeclareOldFontCommand{\\sf}{\\normalfont\\sffamily}{\\mathsf}
+\\DeclareOldFontCommand{\\tt}{\\normalfont\\ttfamily}{\\mathtt}
+\\DeclareOldFontCommand{\\bf}{\\normalfont\\bfseries}{\\mathbf}
+\\DeclareOldFontCommand{\\it}{\\normalfont\\itshape}{\\mathit}
+\\DeclareOldFontCommand{\\sl}{\\normalfont\\slshape}{\\@nomath\\sl}
+\\DeclareOldFontCommand{\\sc}{\\normalfont\\scshape}{\\@nomath\\sc}
+\\makeatother
+"
              ("\\section{%s}" . "\\section*{%s}")
              ("\\subsection{%s}" . "\\subsection*{%s}")
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -126,7 +142,7 @@
 \\usepackage{color}
 \\usepackage{hyperref}
 \\definecolor{linkcolour}{rgb}{0,0.2,0.6}
-\\hypersetup{colorlinks,breaklinks, urlcolor=linkcolour,linkcolor=linkcolour}
+\\hypersetup{colorlinks=false,breaklinks, urlcolor=linkcolour,linkcolor=linkcolour}
 
 \\definecolor{sectionothercolor}{rgb}{1.00,0.65,0.20}
 \\definecolor{sectioncolor}{rgb}{0.35,0.45,0.55}
@@ -184,7 +200,8 @@
   ;            "\\documentclass{moderncv}"
   ;            ("\\section{%s}" . "\\section*{%s}")
   ;            ("\\subsection{%s}" . "\\subsection*{%s}")))
-(setq org-latex-pdf-process (quote ("latexmk -pdf %f")))
+;(setq org-latex-pdf-process (quote ("latexmk -pdf %f")))
+(setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
 )
 
 (add-hook 'org-mode-hook 'fa-org-conf)
@@ -239,10 +256,6 @@
 
 
 
-(setq doom-theme 'doom-vibrant)
-(delq! t custom-theme-load-path)
-
-
 (custom-set-faces!
   '(doom-modeline-buffer-modified :foreground "orange"))
 
@@ -292,3 +305,44 @@
 (after! evil (setq evil-ex-substitute-global t))
 
 (set-company-backend! 'julia-mode '(company-yasnippet company-dabbrev-code :separate))
+
+
+(use-package! org-ref
+  :after org
+   :preface
+  ;; This need to be set before the package is loaded, because org-ref will
+  ;; automatically `require' an associated package during its loading.
+  (setq org-ref-completion-library (cond ((featurep! :completion ivy)  #'org-ref-ivy-cite)
+                                         ((featurep! :completion helm) #'org-ref-helm-bibtex)
+                                         (t                            #'org-ref-reftex)))
+  :config
+  (require 'doi-utils)
+(setq bibtex-autokey-year-length 4
+	bibtex-autokey-name-year-separator "-"
+	bibtex-autokey-year-title-separator "-"
+	bibtex-autokey-titleword-separator "-"
+	bibtex-autokey-titlewords 2
+	bibtex-autokey-titlewords-stretch 1
+	bibtex-autokey-titleword-length 5)
+(require 'org-ref-bibtex)
+(require 'org-ref-pdf)
+  )
+
+(after! org-ref
+  (map! :map org-mode-map
+        :localleader
+        :desc "org-ref insert link" "[" #'org-ref-insert-link)
+    (map! :map org-mode-map
+        :localleader
+        :desc "org-ref insert ref" "(" #'org-ref-insert-ref-link)
+    (map! :map org-mode-map
+        :localleader
+        :desc "org-ref hydra" "k" #'org-ref-cite-hydra/body)
+  )
+
+(after! bibtex
+  (require 'biblio)
+  (map! :map bibtex-mode-map
+        :localleader
+        :desc "Biblio lookup" "l" #'biblio-lookup)
+  )
