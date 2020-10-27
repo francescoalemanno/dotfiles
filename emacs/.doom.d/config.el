@@ -1,5 +1,8 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(menu-bar-mode 1)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -64,7 +67,7 @@
 (setq evil-want-fine-undo t)
 (global-visual-line-mode t)
 (add-hook 'pdf-tools-enabled-hook #'pdf-view-midnight-minor-mode)
-(add-hook 'pdf-tools-enabled-hook #'pdf-view-auto-slice-minor-mode)
+;;(add-hook 'pdf-tools-enabled-hook #'pdf-view-auto-slice-minor-mode) ;; it is nice to have, but it is glitchy
 (add-hook 'pdf-tools-enabled-hook #'pdf-view-fit-width-to-window)
 
 
@@ -219,9 +222,6 @@
 ;;         :init (require 'ox-moderncv))          ;;
 ;;     )                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(menu-bar-mode 1)
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-
 
 
 (after! org
