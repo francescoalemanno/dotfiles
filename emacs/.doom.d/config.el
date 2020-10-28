@@ -324,6 +324,16 @@
         :desc "org-ref hydra" "k" #'org-ref-cite-hydra/body)
   )
 
+(after! pdf-view
+  (map! :map pdf-view-mode-map
+        :localleader
+        :desc "pdf-view reset crop" "r" #'pdf-view-reset-slice)
+  (map! :map pdf-view-mode-map
+        :localleader
+        :desc "pdf-view crop using mouse" "c" #'pdf-view-set-slice-using-mouse)
+  )
+
+
 (after! bibtex
   (require 'biblio)
   (map! :map bibtex-mode-map
