@@ -70,22 +70,6 @@
 ;;(add-hook 'pdf-tools-enabled-hook #'pdf-view-auto-slice-minor-mode) ;; it is nice to have, but it is glitchy
 (add-hook 'pdf-tools-enabled-hook #'pdf-view-fit-width-to-window)
 
-
-;;; handy keybinding for deadgrep
-;;(global-set-key (kbd "<f5>") #'deadgrep)
-
-(map!
- ;; Easier window navigation
- :n "C-h"   #'evil-window-left
- :n "C-j"   #'evil-window-down
- :n "C-k"   #'evil-window-up
- :n "C-l"   #'evil-window-right
-
- (:after treemacs-evil
-   (:map evil-treemacs-state-map
-     "C-h" #'evil-window-left
-     "C-l" #'evil-window-right)))
-
 (setq doom-font (font-spec :family "Hack" :size 14 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Hack" :size 14))
 
