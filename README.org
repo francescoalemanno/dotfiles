@@ -1,4 +1,4 @@
-* Dotfiles config for my only editor: Emacs
+* Dotfiles config for Emacs
 
 Clone Doom-Emacs
 
