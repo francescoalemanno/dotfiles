@@ -49,4 +49,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 ;
-(package! org-ref :pin "2a91b6f67d...")
+;;(package! org-ref )
+(package! org-ref
+  :recipe (:host github :repo "jkitchin/org-ref") :pin "2a91b6f67dc3116b0b688c1242ce67d90d833326")

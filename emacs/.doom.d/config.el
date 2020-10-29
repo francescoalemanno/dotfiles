@@ -73,19 +73,18 @@
 (setq doom-font (font-spec :family "Hack" :size 14 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Hack" :size 14))
 
-(defun fa-org-conf ()
+(defun fa-org-mylatexclasses ()
   (interactive)
   (require 'ox-latex)
-  (setq org-src-fontify-natively t)
-  (setq org-export-with-email t)
   (add-to-list 'org-latex-classes
         '("koma-article"
-             "\\documentclass{scrartcl}
-              \\usepackage{amsthm}
-              \\newtheorem{theorem}{Theorem}
-              \\newtheorem{definition}{Definition}
-              \\newtheorem{proposition}{Proposition}
-              \\newtheorem{remark}{Remark}
+"\\documentclass[11pt]{scrartcl}
+[EXTRA]
+\\usepackage{amsthm}
+\\newtheorem{theorem}{Theorem}
+\\newtheorem{definition}{Definition}
+\\newtheorem{proposition}{Proposition}
+\\newtheorem{remark}{Remark}
 \\makeatletter
 \\DeclareOldFontCommand{\\rm}{\\normalfont\\rmfamily}{\\mathrm}
 \\DeclareOldFontCommand{\\sf}{\\normalfont\\sffamily}{\\mathsf}
@@ -182,33 +181,25 @@
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
              ("\\paragraph{%s}" . "\\paragraph*{%s}")
              ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  ;(add-to-list 'org-latex-classes
-  ;          '("moderncv"
-  ;            "\\documentclass{moderncv}"
-  ;            ("\\section{%s}" . "\\section*{%s}")
-  ;            ("\\subsection{%s}" . "\\subsection*{%s}")))
 ;(setq org-latex-pdf-process (quote ("latexmk -pdf %f")))
-(setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
 )
 
-(add-hook 'org-mode-hook 'fa-org-conf)
-(add-hook 'org-mode-hook '+org-pretty-mode)
+;(add-hook 'org-mode-hook '+org-pretty-mode)
 
 ;(defun fa-org-get-setup ()
 ;  (expand-file-name (concat (file-name-as-directory "org_tpl") "orgsetup.org") doom-private-dir)
 ;  )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (after! evil-org                               ;;
-;;     (use-package ox-moderncv                   ;;
-;;         :load-path "~/.doom.d/packages/org-cv" ;;
-;;         ;;:init (require 'ox-altacv))          ;;
-;;         :init (require 'ox-moderncv))          ;;
-;;     )                                          ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 (after! org
+  (fa-org-mylatexclasses)
+
+  (setq org-export-with-sub-superscripts nil)
+  (setq org-hide-emphasis-markers nil)
+  (setq org-src-fontify-natively t)
+  (setq org-export-with-email t)
+  (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
+  (org-toggle-link-display)
+
   (map! :map org-mode-map
         :localleader
         :desc "View exported file" "v" #'org-view-output-file)
@@ -310,6 +301,7 @@
 	bibtex-autokey-titleword-length 5)
 (require 'org-ref-bibtex)
 (require 'org-ref-pdf)
+(setq org-ref-label-use-font-lock nil)
   )
 
 (after! org-ref
