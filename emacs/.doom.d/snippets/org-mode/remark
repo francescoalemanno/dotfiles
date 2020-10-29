@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: remark
+# key: <rem
+# --
+
+#+begin_remark
+$1
+#+end_remark

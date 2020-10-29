@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name:definition
+# key: <def
+# --
+
+#+begin_definition
+$1
+#+end_definition
