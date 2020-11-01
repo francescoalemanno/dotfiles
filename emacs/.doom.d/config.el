@@ -356,3 +356,10 @@
       "C-<down>"       #'+evil/window-move-down
       "C-<up>"         #'+evil/window-move-up
       "C-<right>"      #'+evil/window-move-right)
+
+
+(after! org-pomodoro
+  (setq org-pomodoro-length 40)
+  (setq org-pomodoro-short-break-length 8)
+  (setq org-pomodoro-long-break-length 15)
+  )
