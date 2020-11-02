@@ -8,7 +8,8 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Francesco Alemanno"
-      user-mail-address "francescoalemanno710@gmail.com")
+      user-mail-address "francescoalemanno710@gmail.com"
+      user-affiliation "Dipartimento di Matematica e Fisica \"Ennio De Giorgi\`\`, Università del Salento, Lecce, Italy")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -28,9 +29,7 @@
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
 
-(setq doom-theme 'doom-palenight)
-(delq! t custom-theme-load-path)
-
+(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -77,6 +76,25 @@
   (interactive)
   (require 'ox-latex)
   (add-to-list 'org-latex-classes
+        '("revtex"
+"\\documentclass[preprint,a4paper, amsfonts, amssymb, amsmath, showkeys, nofootinbib, fleqn]{revtex4-1}
+\\usepackage{amsthm}
+\\newtheorem{theorem}{Theorem}
+\\newtheorem{definition}{Definition}
+\\newtheorem{proposition}{Proposition}
+\\newtheorem{remark}{Remark}
+\\newtheorem{lemma}{Lemma}
+\\newtheorem{corollary}{Corollary}
+\\usepackage[left=23mm,right=13mm,top=35mm,columnsep=15pt]{geometry}
+\\bibliographystyle{apsrev4-1}
+[EXTRA]
+"
+             ("\\section{%s}" . "\\section*{%s}")
+             ("\\subsection{%s}" . "\\subsection*{%s}")
+             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+             ("\\paragraph{%s}" . "\\paragraph*{%s}")
+             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (add-to-list 'org-latex-classes
         '("koma-article"
 "\\documentclass[11pt]{scrartcl}
 [EXTRA]
@@ -85,6 +103,8 @@
 \\newtheorem{definition}{Definition}
 \\newtheorem{proposition}{Proposition}
 \\newtheorem{remark}{Remark}
+\\newtheorem{lemma}{Lemma}
+\\newtheorem{corollary}{Corollary}
 \\makeatletter
 \\DeclareOldFontCommand{\\rm}{\\normalfont\\rmfamily}{\\mathrm}
 \\DeclareOldFontCommand{\\sf}{\\normalfont\\sffamily}{\\mathsf}
@@ -363,3 +383,47 @@
   (setq org-pomodoro-short-break-length 8)
   (setq org-pomodoro-long-break-length 15)
   )
+
+
+
+(defun fa-org-customize-revtex (str)
+  (setq TMP_SPLIT "begin{document}")
+  (setq TMP_STRING (split-string str TMP_SPLIT))
+  (setq TMP_STRING_0 (nth 0 TMP_STRING))
+  (setq TMP_STRING_1 (nth 1 TMP_STRING))
+  (setq TMP_PROC_0 (replace-regexp-in-string "^\\\\title{.*}$" ""
+     (replace-regexp-in-string "^\\\\author{.*}$" ""
+      (replace-regexp-in-string "^\\\\date{.*}$" "" TMP_STRING_0)
+     )
+     ))
+
+  (setq TMP_PROC_1
+     (replace-regexp-in-string "^\\\\maketitle$" ""
+      (replace-regexp-in-string "^\\\\tableofcontents$" "" TMP_STRING_1)
+     )
+     )
+  (setq TMP_PROC_12 (replace-regexp-in-string "^\\\\#\\+MAINTEX$"
+                "\\maketitle\n\\tableofcontents" TMP_PROC_1 t t
+  ))
+  (concat TMP_PROC_0 TMP_SPLIT TMP_PROC_12)
+)
+
+(defun fa-org-customize-template (str)
+  (if (string-match "^.*{revtex4-1}.*$" str)
+      (fa-org-customize-revtex str)
+      str
+      )
+)
+
+(advice-add 'org-latex-template :filter-return 'fa-org-customize-template)
+
+
+;; (fa-org-customize-template "\\documentclass{revtex4-1}
+;; \\title{cane}
+;; \\begin{document}
+;; \\maketitle
+;; \\tableofcontents
+;; \\title{gatto}
+;; \\#+MAINTEX
+;; AAA
+;; \\end{document}")

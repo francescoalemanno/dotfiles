@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name:article
-# key: <article
+# name:koma article
+# key: <koma
 # --
 
 #+TITLE: $1
