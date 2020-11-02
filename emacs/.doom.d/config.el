@@ -201,18 +201,45 @@
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
              ("\\paragraph{%s}" . "\\paragraph*{%s}")
              ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-;(setq org-latex-pdf-process (quote ("latexmk -pdf %f")))
 )
 
 ;(add-hook 'org-mode-hook '+org-pretty-mode)
 
-;(defun fa-org-get-setup ()
-;  (expand-file-name (concat (file-name-as-directory "org_tpl") "orgsetup.org") doom-private-dir)
-;  )
+
+(defun fa-org-customize-revtex (str)
+  (setq TMP_SPLIT "begin{document}")
+  (setq TMP_STRING (split-string str TMP_SPLIT))
+  (setq TMP_STRING_0 (nth 0 TMP_STRING))
+  (setq TMP_STRING_1 (nth 1 TMP_STRING))
+  (setq TMP_PROC_0 (replace-regexp-in-string "^\\\\title{.*}$" ""
+     (replace-regexp-in-string "^\\\\author{.*}$" ""
+      (replace-regexp-in-string "^\\\\date{.*}$" "" TMP_STRING_0)
+     )
+     ))
+
+  (setq TMP_PROC_1
+     (replace-regexp-in-string "^\\\\maketitle$" ""
+      (replace-regexp-in-string "^\\\\tableofcontents$" "" TMP_STRING_1)
+     )
+     )
+  (setq TMP_PROC_12 (replace-regexp-in-string "^\\\\#\\+MAINTEX$"
+                "\\maketitle\n\\tableofcontents" TMP_PROC_1 t t
+  ))
+  (concat TMP_PROC_0 TMP_SPLIT TMP_PROC_12)
+)
+
+(defun fa-org-customize-template (str)
+  (if (string-match "^.*{revtex4-1}.*$" str)
+      (fa-org-customize-revtex str)
+      str
+      )
+)
+
 
 (after! org
   (fa-org-mylatexclasses)
 
+  (advice-add 'org-latex-template :filter-return 'fa-org-customize-template)
   (setq org-export-with-sub-superscripts nil)
   (setq org-hide-emphasis-markers nil)
   (setq org-src-fontify-natively t)
@@ -384,38 +411,6 @@
   (setq org-pomodoro-long-break-length 15)
   )
 
-
-
-(defun fa-org-customize-revtex (str)
-  (setq TMP_SPLIT "begin{document}")
-  (setq TMP_STRING (split-string str TMP_SPLIT))
-  (setq TMP_STRING_0 (nth 0 TMP_STRING))
-  (setq TMP_STRING_1 (nth 1 TMP_STRING))
-  (setq TMP_PROC_0 (replace-regexp-in-string "^\\\\title{.*}$" ""
-     (replace-regexp-in-string "^\\\\author{.*}$" ""
-      (replace-regexp-in-string "^\\\\date{.*}$" "" TMP_STRING_0)
-     )
-     ))
-
-  (setq TMP_PROC_1
-     (replace-regexp-in-string "^\\\\maketitle$" ""
-      (replace-regexp-in-string "^\\\\tableofcontents$" "" TMP_STRING_1)
-     )
-     )
-  (setq TMP_PROC_12 (replace-regexp-in-string "^\\\\#\\+MAINTEX$"
-                "\\maketitle\n\\tableofcontents" TMP_PROC_1 t t
-  ))
-  (concat TMP_PROC_0 TMP_SPLIT TMP_PROC_12)
-)
-
-(defun fa-org-customize-template (str)
-  (if (string-match "^.*{revtex4-1}.*$" str)
-      (fa-org-customize-revtex str)
-      str
-      )
-)
-
-(advice-add 'org-latex-template :filter-return 'fa-org-customize-template)
 
 
 ;; (fa-org-customize-template "\\documentclass{revtex4-1}

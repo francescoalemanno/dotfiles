@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name:revtex article
+# key: <article
+# --
+
+#+LATEX_CLASS: revtex
+#+LATEX_HEADER: \usepackage{float}
+
+#+begin_export latex
+\title{$1}
+\author{`(symbol-value 'user-full-name)`}
+\affiliation{`(symbol-value 'user-affiliation)`}
+#+end_export
+
+#+begin_abstract
+Abstract Content
+#+end_abstract
+
+#+MAINTEX
+
+* Introduction
+$2
