@@ -29,7 +29,9 @@
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
 
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-palenight)
+
+(setq doom-theme 'modus-operandi)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -70,6 +72,7 @@
 (add-hook 'pdf-tools-enabled-hook #'pdf-view-fit-width-to-window)
 
 (setq doom-font (font-spec :family "Hack" :size 14 :weight 'regular)
+      doom-big-font (font-spec :family "Hack" :size 18 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Hack" :size 14))
 
 (defun fa-org-mylatexclasses ()
@@ -223,7 +226,11 @@
      )
      )
   (setq TMP_PROC_12 (replace-regexp-in-string "^\\\\#\\+MAINTEX$"
-                "\\maketitle\n\\tableofcontents" TMP_PROC_1 t t
+"{
+\\let\\clearpage\\relax
+\\maketitle
+}
+\\tableofcontents" TMP_PROC_1 t t
   ))
   (concat TMP_PROC_0 TMP_SPLIT TMP_PROC_12)
 )
@@ -239,7 +246,7 @@
 (after! org
   (fa-org-mylatexclasses)
 
-  (advice-add 'org-latex-template :filter-return 'fa-org-customize-template)
+  (advice-add 'org-latex-template :filter-return 'fa-org-customize-template) ;; making revtex works, maybe more
   (setq org-export-with-sub-superscripts nil)
   (setq org-hide-emphasis-markers nil)
   (setq org-src-fontify-natively t)
@@ -410,15 +417,3 @@
   (setq org-pomodoro-short-break-length 8)
   (setq org-pomodoro-long-break-length 15)
   )
-
-
-
-;; (fa-org-customize-template "\\documentclass{revtex4-1}
-;; \\title{cane}
-;; \\begin{document}
-;; \\maketitle
-;; \\tableofcontents
-;; \\title{gatto}
-;; \\#+MAINTEX
-;; AAA
-;; \\end{document}")
