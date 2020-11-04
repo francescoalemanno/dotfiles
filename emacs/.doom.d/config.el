@@ -2,7 +2,9 @@
 
 (menu-bar-mode 1)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-
+(prefer-coding-system 'utf-8)
+(setq coding-system-for-read 'utf-8)
+(setq coding-system-for-write 'utf-8)
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
