@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: figure
+# key: <fig
+# condition: t
+# --
+
+#+label: fig:$2
+#+caption: $3
+#+ATTR_LATEX: :width 0.65\textwidth
+[[file:${1:fig.png}]]
