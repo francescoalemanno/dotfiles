@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name:corollary
+# key: <corollary
+# --
+
+#+begin_corollary
+$1
+#+end_corollary
