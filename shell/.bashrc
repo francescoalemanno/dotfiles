@@ -196,6 +196,7 @@ ex ()
 
 
 
+export JULIA_NUM_THREADS=8
 export PATH="$PATH:$HOME/julia/bin:$HOME/.emacs.d/bin:/usr/local/bin"
 
 
