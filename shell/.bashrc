@@ -197,7 +197,7 @@ ex ()
 
 
 export JULIA_NUM_THREADS=8
-export PATH="$PATH:$HOME/julia/bin:$HOME/.emacs.d/bin:/usr/local/bin"
+export PATH="$PATH:$HOME/programs/julia/bin:$HOME/.emacs.d/bin:/usr/local/bin"
 
 
 if command -v fish &> /dev/null
